@@ -1,0 +1,11 @@
+__pycache__
+.ipynb_checkpoints
+data
+ckpt
+output
+outputs
+
+*.egg-info
+*.mp3
+*.wav
+*.flac
