@@ -35,3 +35,6 @@ print("token hz: {:.2f}".format(hz))
 wav_dec = plutok_tokenizer.decode(enc).squeeze()
 soundfile.write(output_path, wav_dec, 22050)
 ```
+
+## Pretrained Checkpoints
+You can download pretrained checkpoints [here](https://github.com/Zengyi-Qin/plutok/releases/download/v0.1/pretrained.zip).
