@@ -3,7 +3,6 @@
 ## Introduction
 Plutok is an audio tokenizer that compresses multilingual speech into discrete codes at 27Hz, enabling efficient audio-language autoregressive modeling. With a frame rate 32% lower than previous SOTA audio tokenizers, it allows for 48% longer audio sequences within the same context window. This makes Plutok particularly effective for processing extended audio content while maintaining high-quality compression.
 
-
 ## Training
 Compute semantic embedding of speech audio:
 ```bash
@@ -15,7 +14,7 @@ python scripts/train_vqvae.py --emb_dir outputs/emb/ --save_dir outputs/vqvae
 ```
 Then we train the BPE tokenizer:
 ```
-python scripts/train_bpe.py --text_dir outputs/kmeans/centroid_ids/ --save_dir outputs/tokenizer --vocab_size 12000
+python scripts/train_bpe.py --text_dir outputs/vqvae/centroid_ids/ --save_dir outputs/tokenizer --vocab_size 12000
 ```
 
 ## Inference
@@ -31,8 +30,6 @@ wav, _ = librosa.load(audio_path, sr=22050)
 
 enc = plutok_tokenizer.encode(wav)
 hz = len(enc.ids) / (len(wav.squeeze()) / 22050)
-entropy = calculate_entropy(enc.ids)
-entropy_per_sec = entropy / (len(wav.squeeze()) / 22050)
 
 print("token hz: {:.2f}".format(hz))
 wav_dec = plutok_tokenizer.decode(enc).squeeze()

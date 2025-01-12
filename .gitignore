@@ -12,4 +12,5 @@ results
 *.flac
 *.out 
 *.pth
+*.zip
 nohup*
