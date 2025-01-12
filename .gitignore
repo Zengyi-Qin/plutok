@@ -4,11 +4,12 @@ data
 ckpt
 output
 outputs
+results
 
 *.egg-info
 *.mp3
 *.wav
 *.flac
 *.out 
-
+*.pth
 nohup*

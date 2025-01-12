@@ -77,7 +77,7 @@ class Plutok(object):
     def encode(self, wav_array):
         se = se_extractor.get_se(wav_array, self.ov)
         emb = self.ov.convert(audio_src=wav_array, src_se=se)
-        emb = torch.tensor(emb).float().to(device)
+        emb = torch.tensor(emb).float().to(self.device)
         ids = self.vqvae.predict(emb).detach().cpu().numpy().squeeze()
         ids = "".join(["#" + str(i) for i in ids])
         bpe_ids = self.bpe(ids)["input_ids"]
@@ -88,19 +88,18 @@ class Plutok(object):
         text = self.bpe.decode(enc.ids)
         text = text.replace(" ", "")
         ids = [int(i) for i in text.split("#") if i.isdigit()]
-        ids = torch.tensor(ids).to(device)
-        feat = self.vqvae.decode(ids).permute(0, 2, 1)
+        ids = torch.tensor(ids).to(self.device)
+        feat = self.vqvae.decode(ids)
         feat = torch.tensor(feat).float().to(self.device)
+        feat = feat + torch.randn_like(feat) * 0.3
         wav = self.ov.model.decode(feat, enc.se).detach().cpu().numpy()
         return wav
 
-    def reconstruct(self, wav_array):
+    def reconstruct(self, wav_array, feat=None):
         se = se_extractor.get_se(wav_array, self.ov)
         emb = self.ov.convert(audio_src=wav_array, src_se=se)
         emb = torch.tensor(emb).float().to(self.device)
-        #ids = self.vqvae.predict(emb).detach().cpu().numpy().squeeze()
-        #ids = torch.tensor(ids).to(self.device)
-        #feat = self.vqvae.decode(ids)
         feat = self.vqvae.reconstruct(emb)
+        feat = torch.tensor(feat).float().to(self.device)
         wav = self.ov.model.decode(feat, se).detach().cpu().numpy()
         return wav
