@@ -9,3 +9,6 @@ outputs
 *.mp3
 *.wav
 *.flac
+*.out 
+
+nohup*

@@ -12,17 +12,16 @@ def extract(ov, audio_path, save_dir):
     assert n == 1
     if t < 100:
         return
-    save_path = os.path.splitext(audio_path)[0].replace('/', '_').replace('.', '') + '.npy'
+    save_path = (
+        os.path.splitext(audio_path)[0].replace("/", "_").replace(".", "") + ".npy"
+    )
     save_path = os.path.join(save_dir, save_path)
-    np.save(open(save_path, 'wb'), emb)
+    np.save(open(save_path, "wb"), emb)
 
 
 def extract_batch(ckpt, audio_files, save_dir, device):
-    ckpt_converter = f'{ckpt}/converter'
-    ov = ToneColorConverter(f'{ckpt_converter}/config.json', device=device)
-    ov.load_ckpt(f'{ckpt_converter}/checkpoint.pth')
+    ckpt_converter = f"{ckpt}/converter"
+    ov = ToneColorConverter(f"{ckpt_converter}/config.json", device=device)
+    ov.load_ckpt(f"{ckpt_converter}/checkpoint.pth")
     for audio_file in audio_files:
         extract(ov, audio_file, save_dir)
-
-
-    

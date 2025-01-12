@@ -19,46 +19,48 @@ class EmbeddingDataset(Dataset):
         return len(self.emb_fs)
 
     def __getitem__(self, idx):
-        d = np.load(open(self.emb_fs[idx], 'rb'))
+        d = np.load(open(self.emb_fs[idx], "rb"))
         n, c, t = d.shape
         s = np.random.randint(t, size=self.n_sample)
-        d = d[0].T # (t, c)
+        d = d[0].T  # (t, c)
         return d[s]
 
 
-def train_kmeans(emb_dir, batch_size=256, n_sample=128, n_cluster=256, epochs=10, n_worker=16, save_dir='outputs/kmeans'):
+def train_kmeans(
+    emb_dir,
+    batch_size=256,
+    n_sample=128,
+    n_cluster=256,
+    epochs=10,
+    n_worker=16,
+    save_dir="outputs/kmeans",
+):
     dataset = EmbeddingDataset(emb_dir)
-    dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=n_worker)
-    kmeans = MiniBatchKMeans(n_clusters=n_cluster, max_iter=1000, batch_size=batch_size * n_sample)
+    dataloader = DataLoader(
+        dataset, batch_size=batch_size, shuffle=True, num_workers=n_worker
+    )
+    kmeans = MiniBatchKMeans(
+        n_clusters=n_cluster, max_iter=1000, batch_size=batch_size * n_sample
+    )
     for epoch in range(epochs):
-        for d in tqdm(dataloader, desc="epoch {}".format(epoch)):         
+        for d in tqdm(dataloader, desc="epoch {}".format(epoch)):
             d = d.numpy()
             bs, n, c = d.shape
             d = d.reshape(-1, c)
             kmeans.partial_fit(d)
-    
+
     centroids = kmeans.cluster_centers_
-    res = {'centroids': centroids.tolist()}
-    save_path = os.path.join(save_dir, 'centroids.json')
-    json.dump(res, open(save_path, 'w'), indent=2)
-    print('Saved centroids to ' + save_path)
-    
-    save_dir = os.path.join(save_dir, 'centroid_ids')
+    res = {"centroids": centroids.tolist()}
+    save_path = os.path.join(save_dir, "centroids.json")
+    json.dump(res, open(save_path, "w"), indent=2)
+    print("Saved centroids to " + save_path)
+
+    save_dir = os.path.join(save_dir, "centroid_ids")
     os.makedirs(save_dir, exist_ok=True)
-    for f in tqdm(dataset.emb_fs, desc='pred tok'):
-        d = np.load(open(f, 'rb'))[0].T
+    for f in tqdm(dataset.emb_fs, desc="pred tok"):
+        d = np.load(open(f, "rb"))[0].T
         ids = kmeans.predict(d)
-        text = ['#'+str(i) for i in ids]
-        save_name = os.path.splitext(f.split('/')[-1])[0] + '.txt'
+        text = ["#" + str(i) for i in ids]
+        save_name = os.path.splitext(f.split("/")[-1])[0] + ".txt"
         save_path = os.path.join(save_dir, save_name)
-        open(save_path, 'w').write(''.join(text))
-    
-    
-        
-        
-    
-
-
-
-
-    
+        open(save_path, "w").write("".join(text))

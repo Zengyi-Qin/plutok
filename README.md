@@ -6,5 +6,7 @@ python compute_embedding.py --ckpt ckpt/ --audio_dir data --save_dir outputs --n
 
 python compute_kmeans.py --emb_dir outputs/emb/ --save_dir outputs/kmeans
 
+python compute_vqvae.py --emb_dir outputs/emb/ --save_dir outputs/vqvae
+
 python compute_bpe.py --text_dir outputs/kmeans/centroid_ids/ --save_dir outputs/tokenizer --vocab_size 24000
 ```
