@@ -1,5 +1,6 @@
 # Plutok: Pushing the Token Rate Limit of Multi-lingual Audio Tokenizers
-![image](https://github.com/user-attachments/assets/5fbe0348-6dda-4b25-ac1b-ca76d82bb78e)
+
+<img width="754" alt="image" src="https://github.com/user-attachments/assets/46f780aa-8d82-4f23-aae7-fdc40f3750dc" />
 
 ## Introduction
 Plutok is an audio tokenizer that compresses multilingual speech into discrete codes at **27 toks/s**, enabling efficient audio-language autoregressive modeling. With a **frame rate 32% lower than previous SOTA** audio tokenizers, it allows for **48% longer audio sequences within the same context window**. This makes Plutok particularly effective for processing extended audio content while maintaining high-quality compression.
