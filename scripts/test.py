@@ -19,7 +19,7 @@ if __name__ == "__main__":
     centroids = "./outputs/vqvae/model.pth"
     tokenizer_file = "./outputs/tokenizer/tokenizer.json"
     device = "cuda"
-    audio_path = "resource/tellitall_00_stenhouse_16000.mp3" 
+    audio_path = "resource/okunohosomichi_01-09_basho_16000.mp3" 
     output_path = "./output.mp3"
     plutok_tokenizer = Plutok(ov_ckpt, centroids, tokenizer_file, device)
     wav, _ = librosa.load(audio_path, sr=22050)
