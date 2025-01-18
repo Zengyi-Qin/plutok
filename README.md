@@ -1,7 +1,16 @@
-# Plutok: Pushing the Framerate Limit of Multi-lingual Audio Tokenizers
+# Plutok: Pushing the Token Rate Limit of Multi-lingual Audio Tokenizers
+
+<center>
+    <img width="754" alt="image" src="https://github.com/user-attachments/assets/46f780aa-8d82-4f23-aae7-fdc40f3750dc" />
+</center>
 
 ## Introduction
-Plutok is an audio tokenizer that compresses multilingual speech into discrete codes at 27Hz, enabling efficient audio-language autoregressive modeling. With a frame rate 32% lower than previous SOTA audio tokenizers, it allows for 48% longer audio sequences within the same context window. This makes Plutok particularly effective for processing extended audio content while maintaining high-quality compression.
+Plutok is an audio tokenizer that compresses multilingual speech into discrete codes at **27 toks/s**, enabling efficient audio-language autoregressive modeling. With a **frame rate 32% lower than previous SOTA** audio tokenizers, it allows for **48% longer audio sequences within the same context window**. This makes Plutok particularly effective for processing extended audio content while maintaining high-quality compression.
+
+**Technical report:** [link](https://twisty-oval-d44.notion.site/Plutok-Pushing-the-Token-Rate-Limit-of-Multi-lingual-Audio-Tokenizers-179c58cbbfe280ec96c1d750609b3da2)
+
+## Pretrained Checkpoints
+You can download pretrained checkpoints [here](https://github.com/Zengyi-Qin/plutok/releases/download/v0.1/pretrained.zip).
 
 ## Training
 Compute semantic embedding of speech audio:
@@ -35,6 +44,3 @@ print("token hz: {:.2f}".format(hz))
 wav_dec = plutok_tokenizer.decode(enc).squeeze()
 soundfile.write(output_path, wav_dec, 22050)
 ```
-
-## Pretrained Checkpoints
-You can download pretrained checkpoints [here](https://github.com/Zengyi-Qin/plutok/releases/download/v0.1/pretrained.zip).
