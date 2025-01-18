@@ -161,7 +161,7 @@ class ToneColorConverter(OpenVoiceBaseClass):
     def convert(
         self,
         audio_src,
-        src_se,
+        src_se=None,
         tgt_se=None,
         output_path=None,
         tau=0.3,

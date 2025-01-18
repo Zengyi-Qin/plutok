@@ -13,4 +13,6 @@ results
 *.out 
 *.pth
 *.zip
+.nfs*
 nohup*
+archive/

@@ -584,8 +584,8 @@ class SynthesizerTrn(nn.Module):
             g=g_src if not self.zero_g else torch.zeros_like(g_src),
             tau=tau,
         )
-        z_p = self.flow(z, y_mask, g=g_src)
-        return z_p
+        m_and_q = torch.cat([m_q, logs_q], dim=1)
+        return m_and_q
 
     def decode(self, z_p, g_tgt):
         y_mask = torch.ones_like(z_p)[:, :1]
